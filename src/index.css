@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '@fontsource/space-grotesk/400.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+
+@layer base {
+  :root {
+    /* InnoVah Tech Dark Theme */
+    --background: 0 0% 4%;
+    --foreground: 45 10% 95%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 45 10% 95%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 45 10% 95%;
+
+    /* Gold Primary */
+    --primary: 45 64% 52%;
+    --primary-foreground: 0 0% 4%;
+
+    /* Graphite Secondary */
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 45 10% 90%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 55%;
+
+    --accent: 45 64% 52%;
+    --accent-foreground: 0 0% 4%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 45 64% 52%;
+
+    --radius: 0.75rem;
+
+    /* Custom InnoVah Variables */
+    --gold: 45 64% 52%;
+    --gold-glow: 45 100% 60%;
+    --graphite: 0 0% 12%;
+    --deep-black: 0 0% 4%;
+    --soft-white: 45 10% 95%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+}
+
+@layer components {
+  /* Glassmorphism Card */
+  .glass-card {
+    @apply bg-card/60 backdrop-blur-xl border border-border/50 rounded-2xl;
+    box-shadow: 
+      0 4px 30px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  /* Gold Glow Effect */
+  .gold-glow {
+    box-shadow: 0 0 40px hsl(var(--gold) / 0.3),
+                0 0 80px hsl(var(--gold) / 0.1);
+  }
+
+  .gold-text-glow {
+    text-shadow: 0 0 30px hsl(var(--gold) / 0.5);
+  }
+
+  /* Gradient Mesh Background */
+  .gradient-mesh {
+    background: 
+      radial-gradient(ellipse at 20% 30%, hsl(var(--gold) / 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, hsl(var(--gold) / 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, hsl(var(--graphite)) 0%, hsl(var(--deep-black)) 100%);
+  }
+
+  /* Animated Grid Background */
+  .grid-pattern {
+    background-image: 
+      linear-gradient(hsl(var(--border) / 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.3) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Button Variants */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl 
+           transition-all duration-300 hover:scale-105;
+    box-shadow: 0 0 30px hsl(var(--gold) / 0.3);
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 50px hsl(var(--gold) / 0.5);
+  }
+
+  .btn-secondary {
+    @apply bg-secondary/80 text-secondary-foreground font-semibold px-8 py-4 rounded-xl 
+           border border-border/50 transition-all duration-300 hover:border-primary/50
+           backdrop-blur-sm;
+  }
+
+  /* Section Styling */
+  .section-padding {
+    @apply py-24 px-6 md:px-12 lg:px-24;
+  }
+
+  /* Capability Card Hover */
+  .capability-card {
+    @apply glass-card p-8 transition-all duration-500 cursor-pointer;
+  }
+
+  .capability-card:hover {
+    @apply border-primary/50;
+    box-shadow: 0 20px 60px hsl(var(--gold) / 0.1),
+                inset 0 1px 0 hsl(var(--gold) / 0.1);
+    transform: translateY(-4px);
+  }
+
+  /* Product Card */
+  .product-card {
+    @apply glass-card overflow-hidden transition-all duration-500;
+  }
+
+  .product-card:hover {
+    @apply border-primary/40;
+    transform: translateY(-8px);
+    box-shadow: 0 30px 80px hsl(var(--gold) / 0.15);
+  }
+
+  /* Text Gradient */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary via-[hsl(45,80%,65%)] to-primary 
+           bg-clip-text text-transparent;
+  }
+
+  /* Underline Animation */
+  .animated-underline {
+    @apply relative;
+  }
+
+  .animated-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300;
+  }
+
+  .animated-underline:hover::after {
+    @apply w-full;
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 4s ease-in-out infinite;
+  }
+
+  .animate-gradient {
+    animation: gradient 8s ease infinite;
+    background-size: 200% 200%;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
