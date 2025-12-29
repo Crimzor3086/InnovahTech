@@ -1,10 +1,23 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Puzzle, ShieldCheck, Wrench, Handshake } from "lucide-react";
 
-// Import founder image - replace this path with your actual image
-// If you don't have an image yet, set this to null and it will show initials
-import founderImage from "@/assets/founder.jpg";
+// ============================================
+// FOUNDER IMAGE CUSTOMIZATION
+// ============================================
+// To add your founder's image:
+// 1. Add your image file to: src/assets/ (e.g., founder.jpg, founder.png)
+// 2. Uncomment and update the import below with your image filename
+// 3. Supported formats: .jpg, .jpeg, .png, .webp
+// 
+// Example: import founderImage from "@/assets/founder.jpg";
+// 
+// If no image is imported, it will show initials "DB" as fallback
+// ============================================
+
+// Uncomment and update the path to your founder's image:
+// import founderImage from "@/assets/founder.jpg";
+const founderImage: string | null = null; // Set to null if no image, or import your image above
 
 const reasons = [
   {
@@ -36,6 +49,7 @@ const reasons = [
 const WhyChooseSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [imageError, setImageError] = useState(false);
 
   return (
     <section id="about" className="section-padding relative overflow-hidden">
@@ -66,10 +80,19 @@ const WhyChooseSection = () => {
             {/* Founder Info */}
             <div className="glass-card p-6 inline-block">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="font-heading font-bold text-primary text-xl">
-                    DB
-                  </span>
+                <div className="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden flex-shrink-0">
+                  {founderImage && !imageError ? (
+                    <img
+                      src={founderImage}
+                      alt="David Barasa"
+                      className="w-full h-full object-cover"
+                      onError={() => setImageError(true)}
+                    />
+                  ) : (
+                    <span className="font-heading font-bold text-primary text-xl">
+                      DB
+                    </span>
+                  )}
                 </div>
                 <div>
                   <h4 className="font-heading font-bold">David Barasa</h4>
