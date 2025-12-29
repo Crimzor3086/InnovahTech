@@ -1,46 +1,167 @@
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import heroBg from "@/assets/hero-bg.jpg";
 
 const HeroSection = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const mouseX = useSpring(useMotionValue(0), { stiffness: 500, damping: 100 });
+  const mouseY = useSpring(useMotionValue(0), { stiffness: 500, damping: 100 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
+
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Image */}
+      {/* Animated Gradient Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5 animate-gradient" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.1),transparent_50%)] animate-pulse-slow" />
+      </div>
+
+      {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img
           src={heroBg}
           alt="Hero background"
-          className="w-full h-full object-cover opacity-60"
+          className="w-full h-full object-cover opacity-40"
         />
-        <div className="absolute inset-0 gradient-mesh" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background/80" />
+      </div>
+
+      {/* Animated Mesh Gradient */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--primary)/0.2),transparent_50%)] animate-pulse-slow" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(var(--primary)/0.15),transparent_50%)] animate-pulse-slow" style={{ animationDelay: '1s' }} />
       </div>
 
       {/* Animated Grid Pattern */}
-      <div className="absolute inset-0 grid-pattern opacity-30" />
+      <motion.div 
+        className="absolute inset-0 grid-pattern opacity-20"
+        animate={{
+          backgroundPosition: ["0% 0%", "100% 100%"],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "linear",
+        }}
+      />
 
-      {/* Floating Particles */}
+      {/* Floating Orbs/Glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(5)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <motion.div
-            key={i}
-            className="absolute w-2 h-2 rounded-full bg-primary/30"
-            initial={{ x: Math.random() * 100 + "%", y: "100%" }}
+            key={`orb-${i}`}
+            className="absolute rounded-full blur-3xl"
+            style={{
+              width: `${100 + Math.random() * 200}px`,
+              height: `${100 + Math.random() * 200}px`,
+              background: `radial-gradient(circle, hsl(var(--primary)/${0.1 + Math.random() * 0.2}), transparent)`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
             animate={{
-              y: "-10%",
-              x: `${Math.random() * 100}%`,
+              x: [0, Math.random() * 200 - 100],
+              y: [0, Math.random() * 200 - 100],
+              scale: [1, 1.2 + Math.random() * 0.3, 1],
+              opacity: [0.3, 0.6, 0.3],
             }}
             transition={{
-              duration: 15 + Math.random() * 10,
+              duration: 10 + Math.random() * 10,
               repeat: Infinity,
-              ease: "linear",
-              delay: i * 2,
+              ease: "easeInOut",
+              delay: i * 0.5,
             }}
           />
         ))}
       </div>
+
+      {/* Enhanced Floating Particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={`particle-${i}`}
+            className="absolute rounded-full"
+            style={{
+              width: `${2 + Math.random() * 4}px`,
+              height: `${2 + Math.random() * 4}px`,
+              background: `hsl(var(--primary)/${0.3 + Math.random() * 0.4})`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -100 - Math.random() * 200],
+              x: [0, Math.random() * 100 - 50],
+              opacity: [0, 1, 0],
+              scale: [0, 1, 0],
+            }}
+            transition={{
+              duration: 10 + Math.random() * 15,
+              repeat: Infinity,
+              ease: "easeOut",
+              delay: i * 0.3,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Interactive Cursor Glow Effect */}
+      <motion.div
+        className="absolute w-96 h-96 rounded-full blur-3xl pointer-events-none opacity-20"
+        style={{
+          background: "radial-gradient(circle, hsl(var(--primary)/0.4), transparent 70%)",
+          x: mouseX,
+          y: mouseY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+      />
+
+      {/* Animated Connection Lines */}
+      <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none">
+        <defs>
+          <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0" />
+            <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        {[...Array(5)].map((_, i) => (
+          <motion.line
+            key={`line-${i}`}
+            x1={`${20 + i * 15}%`}
+            y1="0%"
+            x2={`${30 + i * 10}%`}
+            y2="100%"
+            stroke="url(#lineGradient)"
+            strokeWidth="1"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{
+              pathLength: [0, 1, 0],
+              opacity: [0, 0.3, 0],
+            }}
+            transition={{
+              duration: 4 + i,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: i * 0.5,
+            }}
+          />
+        ))}
+      </svg>
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
