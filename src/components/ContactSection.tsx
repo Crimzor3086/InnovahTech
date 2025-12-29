@@ -22,21 +22,6 @@ const ContactSection = () => {
     const message = formData.get("message") as string;
 
     try {
-      // Using EmailJS to send email
-      // Note: You'll need to set up EmailJS service and get your keys
-      // For now, using a fallback mailto approach
-      const emailBody = `
-Name: ${name}
-Email: ${email}
-Service: ${service}
-
-Message:
-${message}
-      `.trim();
-
-      // Create mailto link as fallback
-      const mailtoLink = `mailto:innovahtech2@gmail.com?subject=Contact Form Submission - ${service}&body=${encodeURIComponent(emailBody)}`;
-      
       // Try to use EmailJS if configured
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
       const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -56,17 +41,52 @@ ${message}
           publicKey
         );
         toast.success("Message sent successfully! We'll get back to you soon.");
+        form.reset();
       } else {
-        // Fallback to mailto
+        // Fallback: Use mailto with pre-filled email
+        const emailBody = `Hello,
+
+I'm interested in your ${service} services.
+
+Name: ${name}
+Email: ${email}
+
+Message:
+${message}
+
+Thank you!`;
+
+        const mailtoLink = `mailto:innovahtech2@gmail.com?subject=Contact Form: ${service}&body=${encodeURIComponent(emailBody)}`;
         window.location.href = mailtoLink;
         toast.success("Opening email client... Please send the message.");
+        // Reset form after a short delay to allow mailto to open
+        setTimeout(() => {
+          form.reset();
+        }, 1000);
       }
     } catch (error) {
       console.error("Error sending email:", error);
-      toast.error("Failed to send message. Please try again or contact us directly.");
+      // If EmailJS fails, fallback to mailto
+      const emailBody = `Hello,
+
+I'm interested in your ${service} services.
+
+Name: ${name}
+Email: ${email}
+
+Message:
+${message}
+
+Thank you!`;
+
+      const mailtoLink = `mailto:innovahtech2@gmail.com?subject=Contact Form: ${service}&body=${encodeURIComponent(emailBody)}`;
+      window.location.href = mailtoLink;
+      toast.info("Using email client as fallback. Please send the message.");
+      setTimeout(() => {
+        form.reset();
+      }, 1000);
     } finally {
       setIsSubmitting(false);
-      form.reset();
     }
   };
 

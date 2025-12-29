@@ -2,6 +2,10 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Puzzle, ShieldCheck, Wrench, Handshake } from "lucide-react";
 
+// Import founder image - replace this path with your actual image
+// If you don't have an image yet, set this to null and it will show initials
+import founderImage from "@/assets/founder.jpg";
+
 const reasons = [
   {
     icon: Puzzle,
