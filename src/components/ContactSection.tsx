@@ -2,22 +2,72 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Send, Mail, Phone, MapPin } from "lucide-react";
 import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
 
 const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    toast.success("Message sent successfully! We'll get back to you soon.");
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
+
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const service = formData.get("service") as string;
+    const message = formData.get("message") as string;
+
+    try {
+      // Using EmailJS to send email
+      // Note: You'll need to set up EmailJS service and get your keys
+      // For now, using a fallback mailto approach
+      const emailBody = `
+Name: ${name}
+Email: ${email}
+Service: ${service}
+
+Message:
+${message}
+      `.trim();
+
+      // Create mailto link as fallback
+      const mailtoLink = `mailto:innovahtech2@gmail.com?subject=Contact Form Submission - ${service}&body=${encodeURIComponent(emailBody)}`;
+      
+      // Try to use EmailJS if configured
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      if (serviceId && templateId && publicKey) {
+        await emailjs.send(
+          serviceId,
+          templateId,
+          {
+            from_name: name,
+            from_email: email,
+            service: service,
+            message: message,
+            to_email: "innovahtech2@gmail.com",
+          },
+          publicKey
+        );
+        toast.success("Message sent successfully! We'll get back to you soon.");
+      } else {
+        // Fallback to mailto
+        window.location.href = mailtoLink;
+        toast.success("Opening email client... Please send the message.");
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error("Failed to send message. Please try again or contact us directly.");
+    } finally {
+      setIsSubmitting(false);
+      form.reset();
+    }
   };
 
   return (
@@ -52,7 +102,7 @@ const ContactSection = () => {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <form onSubmit={handleSubmit} className="glass-card p-8 space-y-6">
+            <form ref={formRef} onSubmit={handleSubmit} className="glass-card p-8 space-y-6">
               <div className="grid sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium mb-2">
@@ -60,6 +110,7 @@ const ContactSection = () => {
                   </label>
                   <input
                     type="text"
+                    name="name"
                     required
                     className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
                     placeholder="John Doe"
@@ -71,6 +122,7 @@ const ContactSection = () => {
                   </label>
                   <input
                     type="email"
+                    name="email"
                     required
                     className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
                     placeholder="john@example.com"
@@ -82,7 +134,11 @@ const ContactSection = () => {
                 <label className="block text-sm font-medium mb-2">
                   Service Interested In
                 </label>
-                <select className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors">
+                <select 
+                  name="service"
+                  required
+                  className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
+                >
                   <option value="">Select a service</option>
                   <option value="networking">Internet & Networking</option>
                   <option value="software">Software Development</option>
@@ -96,6 +152,7 @@ const ContactSection = () => {
                   Project Details
                 </label>
                 <textarea
+                  name="message"
                   rows={4}
                   required
                   className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors resize-none"
@@ -139,10 +196,10 @@ const ContactSection = () => {
                   <div>
                     <h4 className="font-medium mb-1">Email</h4>
                     <a
-                      href="mailto:hello@innovahtech.com"
+                      href="mailto:innovahtech2@gmail.com"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      hello@innovahtech.com
+                      innovahtech2@gmail.com
                     </a>
                   </div>
                 </div>
@@ -154,10 +211,10 @@ const ContactSection = () => {
                   <div>
                     <h4 className="font-medium mb-1">Phone</h4>
                     <a
-                      href="tel:+254700000000"
+                      href="tel:+254702970187"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      +254 700 000 000
+                      +254 702 970 187
                     </a>
                   </div>
                 </div>
@@ -187,7 +244,7 @@ const ContactSection = () => {
                 For existing clients requiring immediate technical assistance.
               </p>
               <a
-                href="https://wa.me/254700000000"
+                href="https://wa.me/254702970187"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary inline-flex items-center gap-2"
