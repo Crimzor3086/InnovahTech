@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Puzzle, ShieldCheck, Wrench, Handshake } from "lucide-react";
+import { Puzzle, ShieldCheck, Handshake } from "lucide-react";
 
 // Founder image from public folder
 const founderImage: string = "/founder.jpg";
@@ -17,12 +17,6 @@ const reasons = [
     title: "Security by Design",
     description:
       "Security isn't an afterthought—it's built into every layer of our systems from day one.",
-  },
-  {
-    icon: Wrench,
-    title: "Deep Technical Ownership",
-    description:
-      "We own the entire stack. From infrastructure to application, we maintain full technical control.",
   },
   {
     icon: Handshake,

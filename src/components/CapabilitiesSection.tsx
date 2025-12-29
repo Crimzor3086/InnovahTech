@@ -5,18 +5,12 @@ import { Network, Code, Blocks, Headphones } from "lucide-react";
 
 const capabilities = [
   {
-    icon: Network,
-    title: "Internet & Networking",
-    description:
-      "Enterprise-grade fiber, wireless networks, LAN/WAN design, and secure ISP solutions with 24/7 monitoring.",
-    features: ["Fiber Deployment", "Campus Networks", "ISP Solutions"],
-  },
-  {
     icon: Code,
     title: "Software & SaaS Engineering",
     description:
       "Custom web and mobile applications, SaaS platforms, admin dashboards, and seamless API integrations.",
     features: ["Custom Apps", "SaaS Platforms", "API Development"],
+    comingSoon: false,
   },
   {
     icon: Blocks,
@@ -24,6 +18,7 @@ const capabilities = [
     description:
       "DeFi protocols, smart contracts, AI trading engines, and decentralized governance systems.",
     features: ["DeFi Platforms", "Smart Contracts", "AI Systems"],
+    comingSoon: false,
   },
   {
     icon: Headphones,
@@ -31,6 +26,15 @@ const capabilities = [
     description:
       "Digital transformation strategy, cloud consulting, and comprehensive managed IT support.",
     features: ["IT Strategy", "Cloud Solutions", "24/7 Support"],
+    comingSoon: false,
+  },
+  {
+    icon: Network,
+    title: "Internet & Networking",
+    description:
+      "Enterprise-grade fiber, wireless networks, LAN/WAN design, and secure ISP solutions with 24/7 monitoring.",
+    features: ["Fiber Deployment", "Campus Networks", "ISP Solutions"],
+    comingSoon: true,
   },
 ];
 
@@ -71,20 +75,29 @@ const CapabilitiesSection = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="capability-card group"
+              className={`capability-card group relative ${capability.comingSoon ? 'opacity-75' : ''}`}
             >
+              {/* Coming Soon Badge */}
+              {capability.comingSoon && (
+                <div className="absolute top-4 right-4">
+                  <span className="px-3 py-1 text-xs font-medium rounded-full bg-primary/20 text-primary border border-primary/30">
+                    Coming Soon
+                  </span>
+                </div>
+              )}
+
               {/* Icon */}
-              <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
-                <capability.icon className="w-7 h-7 text-primary" />
+              <div className={`w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors ${capability.comingSoon ? 'opacity-60' : ''}`}>
+                <capability.icon className={`w-7 h-7 text-primary ${capability.comingSoon ? 'opacity-60' : ''}`} />
               </div>
 
               {/* Title */}
-              <h3 className="font-heading text-2xl font-bold mb-3 group-hover:text-primary transition-colors">
+              <h3 className={`font-heading text-2xl font-bold mb-3 group-hover:text-primary transition-colors ${capability.comingSoon ? 'opacity-75' : ''}`}>
                 {capability.title}
               </h3>
 
               {/* Description */}
-              <p className="text-muted-foreground mb-6 leading-relaxed">
+              <p className={`text-muted-foreground mb-6 leading-relaxed ${capability.comingSoon ? 'opacity-70' : ''}`}>
                 {capability.description}
               </p>
 
@@ -93,7 +106,7 @@ const CapabilitiesSection = () => {
                 {capability.features.map((feature) => (
                   <span
                     key={feature}
-                    className="px-3 py-1 text-sm rounded-full bg-secondary/80 text-secondary-foreground border border-border/50"
+                    className={`px-3 py-1 text-sm rounded-full bg-secondary/80 text-secondary-foreground border border-border/50 ${capability.comingSoon ? 'opacity-60' : ''}`}
                   >
                     {feature}
                   </span>
