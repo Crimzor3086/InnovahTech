@@ -36,8 +36,12 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <a href="#home" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center gold-glow">
-              <span className="font-heading font-bold text-xl text-primary-foreground">I</span>
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center gold-glow overflow-hidden">
+              <img 
+                src="/logo.png" 
+                alt="InnoVah Tech Logo" 
+                className="w-full h-full object-contain p-1.5"
+              />
             </div>
             <span className="font-heading font-bold text-xl text-foreground group-hover:text-primary transition-colors">
               InnoVah<span className="text-primary">Tech</span>
