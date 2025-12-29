@@ -1,5 +1,5 @@
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, useInView, useMotionValue, useSpring } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import { Send, Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
@@ -9,6 +9,18 @@ const ContactSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const mouseX = useSpring(useMotionValue(0), { stiffness: 500, damping: 100 });
+  const mouseY = useSpring(useMotionValue(0), { stiffness: 500, damping: 100 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -85,8 +97,138 @@ Message: ${message}`;
 
   return (
     <section id="contact" className="section-padding relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 grid-pattern opacity-20" />
+      {/* Animated Gradient Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5 animate-gradient" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_40%_50%,hsl(var(--primary)/0.1),transparent_50%)] animate-pulse-slow" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_60%_50%,hsl(var(--primary)/0.08),transparent_50%)] animate-pulse-slow" style={{ animationDelay: '2.5s' }} />
+      </div>
+
+      {/* Animated Mesh Gradient */}
+      <div className="absolute inset-0 opacity-25">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_left_center,hsl(var(--primary)/0.16),transparent_50%)] animate-pulse-slow" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_right_center,hsl(var(--primary)/0.14),transparent_50%)] animate-pulse-slow" style={{ animationDelay: '1.8s' }} />
+      </div>
+
+      {/* Background Gradient */}
+      <div className="absolute inset-0 gradient-mesh opacity-25" />
+
+      {/* Animated Grid Pattern */}
+      <motion.div 
+        className="absolute inset-0 grid-pattern opacity-15"
+        animate={{
+          backgroundPosition: ["0% 0%", "100% 100%"],
+        }}
+        transition={{
+          duration: 28,
+          repeat: Infinity,
+          repeatType: "reverse",
+          ease: "linear",
+        }}
+      />
+
+      {/* Floating Orbs/Glows */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={`orb-${i}`}
+            className="absolute rounded-full blur-3xl"
+            style={{
+              width: `${85 + Math.random() * 155}px`,
+              height: `${85 + Math.random() * 155}px`,
+              background: `radial-gradient(circle, hsl(var(--primary)/${0.09 + Math.random() * 0.16}), transparent)`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              x: [0, Math.random() * 130 - 65],
+              y: [0, Math.random() * 130 - 65],
+              scale: [1, 1.18 + Math.random() * 0.28, 1],
+              opacity: [0.22, 0.52, 0.22],
+            }}
+            transition={{
+              duration: 10 + Math.random() * 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: i * 0.55,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Enhanced Floating Particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(16)].map((_, i) => (
+          <motion.div
+            key={`particle-${i}`}
+            className="absolute rounded-full"
+            style={{
+              width: `${1.8 + Math.random() * 3.2}px`,
+              height: `${1.8 + Math.random() * 3.2}px`,
+              background: `hsl(var(--primary)/${0.28 + Math.random() * 0.38})`,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -85 - Math.random() * 155],
+              x: [0, Math.random() * 85 - 42.5],
+              opacity: [0, 0.85, 0],
+              scale: [0, 1.15, 0],
+            }}
+            transition={{
+              duration: 10 + Math.random() * 14,
+              repeat: Infinity,
+              ease: "easeOut",
+              delay: i * 0.38,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Interactive Cursor Glow Effect */}
+      <motion.div
+        className="absolute w-80 h-80 rounded-full blur-3xl pointer-events-none opacity-12"
+        style={{
+          background: "radial-gradient(circle, hsl(var(--primary)/0.32), transparent 70%)",
+          x: mouseX,
+          y: mouseY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
+      />
+
+      {/* Animated Communication Icons/Shapes */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <svg className="w-full h-full opacity-[0.07]">
+          <defs>
+            <linearGradient id="commGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0" />
+              <stop offset="50%" stopColor="hsl(var(--primary))" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          {[...Array(5)].map((_, i) => (
+            <motion.circle
+              key={`comm-${i}`}
+              cx={`${25 + (i % 3) * 25}%`}
+              cy={`${25 + Math.floor(i / 3) * 25}%`}
+              r="3"
+              fill="url(#commGradient)"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{
+                opacity: [0, 0.5, 0],
+                scale: [0, 1.4, 0],
+              }}
+              transition={{
+                duration: 3.5 + i * 0.7,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.5,
+              }}
+            />
+          ))}
+        </svg>
+      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto" ref={ref}>
         {/* Section Header */}
