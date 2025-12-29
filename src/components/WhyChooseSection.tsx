@@ -2,22 +2,8 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Puzzle, ShieldCheck, Wrench, Handshake } from "lucide-react";
 
-// ============================================
-// FOUNDER IMAGE CUSTOMIZATION
-// ============================================
-// To add your founder's image:
-// 1. Add your image file to: src/assets/ (e.g., founder.jpg, founder.png)
-// 2. Uncomment and update the import below with your image filename
-// 3. Supported formats: .jpg, .jpeg, .png, .webp
-// 
-// Example: import founderImage from "@/assets/founder.jpg";
-// 
-// If no image is imported, it will show initials "DB" as fallback
-// ============================================
-
-// Uncomment and update the path to your founder's image:
-// import founderImage from "@/assets/founder.jpg";
-const founderImage: string | null = null; // Set to null if no image, or import your image above
+// Founder image from public folder
+const founderImage: string = "/founder.jpg";
 
 const reasons = [
   {
