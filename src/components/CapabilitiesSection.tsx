@@ -4,37 +4,93 @@ import { useRef, useEffect } from "react";
 import { Network, Code, Blocks, Headphones } from "lucide-react";
 
 const capabilities = [
+  // 🌐 Web Development
   {
     icon: Code,
-    title: "Software & SaaS Engineering",
-    description:
-      "Custom web and mobile applications, SaaS platforms, admin dashboards, and seamless API integrations.",
-    features: ["Custom Apps", "SaaS Platforms", "API Development"],
+    title: "🌐 Starter Website (Personal / Small Business)",
+    description: "Web Development",
+    features: ["1–3 pages", "Mobile responsive", "Contact form"],
+    priceUSD: "$80 – $120",
+    priceKES: "12,000 – 18,000",
+    comingSoon: false,
+  },
+  {
+    icon: Code,
+    title: "🌐 Business Website",
+    description: "Web Development",
+    features: ["5–7 pages", "Admin panel", "SEO basics"],
+    priceUSD: "$180 – $300",
+    priceKES: "27,000 – 45,000",
+    comingSoon: false,
+  },
+  {
+    icon: Code,
+    title: "🌐 Custom Web Systems",
+    description: "Portals, dashboards, SaaS",
+    features: ["Custom portals", "Dashboards", "SaaS"],
+    priceUSD: "$500 – $1,200",
+    priceKES: "75,000 – 180,000",
+    comingSoon: false,
+  },
+
+  // 📱 Mobile App Development
+  {
+    icon: Blocks,
+    title: "📱 Basic Mobile App",
+    description: "Android or iOS with core features",
+    features: ["Android or iOS", "Core features"],
+    priceUSD: "$600 – $1,000",
+    priceKES: "90,000 – 150,000",
     comingSoon: false,
   },
   {
     icon: Blocks,
-    title: "Blockchain, Web3 & AI",
-    description:
-      "DeFi protocols, smart contracts, AI trading engines, and decentralized governance systems.",
-    features: ["DeFi Platforms", "Smart Contracts", "AI Systems"],
+    title: "📱 Advanced Mobile App",
+    description: "Payments, authentication, admin dashboard",
+    features: ["Payments", "Authentication", "Admin dashboard"],
+    priceUSD: "$1,500 – $3,000",
+    priceKES: "225,000 – 450,000",
     comingSoon: false,
   },
+
+  // 🔐 Cybersecurity
   {
-    icon: Headphones,
-    title: "Consulting & Managed IT",
-    description:
-      "Digital transformation strategy, cloud consulting, and comprehensive managed IT support.",
-    features: ["IT Strategy", "Cloud Solutions", "24/7 Support"],
+    icon: Network,
+    title: "🔐 Basic Security Check",
+    description: "Cybersecurity",
+    features: ["Malware scan", "Configuration review"],
+    priceUSD: "$80 – $150",
+    priceKES: "12,000 – 22,500",
     comingSoon: false,
   },
   {
     icon: Network,
-    title: "Internet & Networking",
-    description:
-      "Enterprise-grade fiber, wireless networks, LAN/WAN design, and secure ISP solutions with 24/7 monitoring.",
-    features: ["Fiber Deployment", "Campus Networks", "ISP Solutions"],
-    comingSoon: true,
+    title: "🔐 Security Hardening & Pentest",
+    description: "Cybersecurity",
+    features: ["Vulnerability testing"],
+    priceUSD: "$300 – $800",
+    priceKES: "45,000 – 120,000",
+    comingSoon: false,
+  },
+
+  // 📊 Data & AI Solutions
+  {
+    icon: Headphones,
+    title: "📊 Data Dashboard Setup",
+    description: "Reports & analytics",
+    features: ["Reports", "Analytics"],
+    priceUSD: "$200 – $400",
+    priceKES: "30,000 – 60,000",
+    comingSoon: false,
+  },
+  {
+    icon: Headphones,
+    title: "📊 AI Automation (Chatbots, Tools)",
+    description: "Customer support bots and internal tools",
+    features: ["Chatbots", "Automation tools"],
+    priceUSD: "$400 – $1,000",
+    priceKES: "60,000 – 150,000",
+    comingSoon: false,
   },
 ];
 
@@ -254,6 +310,22 @@ const CapabilitiesSection = () => {
                   </span>
                 ))}
               </div>
+
+              {/* Pricing */}
+              {('priceUSD' in capability || 'priceKES' in capability) && (
+                <div className={`mt-5 pt-5 border-t border-border/50 ${capability.comingSoon ? 'opacity-60' : ''}`}>
+                  {('priceUSD' in capability) && (
+                    <p className="text-sm font-medium">
+                      USD: <span className="text-primary">{(capability as any).priceUSD}</span>
+                    </p>
+                  )}
+                  {('priceKES' in capability) && (
+                    <p className="text-sm font-medium">
+                      KES: <span className="text-primary">{(capability as any).priceKES}</span>
+                    </p>
+                  )}
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
