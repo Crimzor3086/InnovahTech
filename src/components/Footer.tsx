@@ -1,4 +1,11 @@
-import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
+const quickLinks = [
+  { label: "Home", to: "/" },
+  { label: "Services", to: "/services" },
+  { label: "About", to: "/about" },
+  { label: "Contact", to: "/contact" },
+];
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,7 +16,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8 sm:gap-10">
           {/* Brand */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 sm:gap-3 mb-4">
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 mb-4 w-fit">
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center overflow-hidden">
                 <img 
                   src="/logo.png" 
@@ -20,7 +27,7 @@ const Footer = () => {
               <span className="font-heading font-bold text-lg sm:text-xl">
                 InnoVah<span className="text-primary">Tech</span>
               </span>
-            </div>
+            </Link>
             <p className="text-muted-foreground max-w-sm leading-relaxed text-sm sm:text-base">
               Where Innovation Connects to Life. Building secure, scalable,
               and intelligent systems for modern organizations.
@@ -31,14 +38,14 @@ const Footer = () => {
           <div>
             <h4 className="font-heading font-bold mb-3 sm:mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              {["Services", "About", "Contact"].map((link) => (
-                <li key={link}>
-                  <a
-                    href={`#${link.toLowerCase()}`}
+              {quickLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    to={link.to}
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    {link}
-                  </a>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import heroBg from "@/assets/hero-bg.jpg";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -218,13 +219,13 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center"
         >
-          <a href="#contact" className="btn-primary inline-flex items-center justify-center gap-2 group w-full sm:w-auto">
+          <Link to="/contact" className="btn-primary inline-flex items-center justify-center gap-2 group w-full sm:w-auto">
             Request a Quote
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </a>
-          <a href="#services" className="btn-secondary inline-flex items-center justify-center gap-2 w-full sm:w-auto">
+          </Link>
+          <Link to="/services" className="btn-secondary inline-flex items-center justify-center gap-2 w-full sm:w-auto">
             Explore Our Solutions
-          </a>
+          </Link>
         </motion.div>
 
         {/* Trust Keywords */}

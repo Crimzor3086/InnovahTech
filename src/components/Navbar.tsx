@@ -1,18 +1,19 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "Services", href: "#services" },
-  { name: "About", href: "#about" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", to: "/" },
+  { name: "Services", to: "/services" },
+  { name: "About", to: "/about" },
+  { name: "Contact", to: "/contact" },
 ];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeHash, setActiveHash] = useState("#home");
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,14 +42,8 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    const updateActiveHash = () => {
-      setActiveHash(window.location.hash || "#home");
-    };
-
-    updateActiveHash();
-    window.addEventListener("hashchange", updateActiveHash);
-    return () => window.removeEventListener("hashchange", updateActiveHash);
-  }, []);
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -75,14 +70,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
-          <a
-            href="#home"
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              setActiveHash("#home");
-            }}
-            className="flex items-center gap-2 sm:gap-3 group min-w-0"
-          >
+          <Link to="/" className="flex items-center gap-2 sm:gap-3 group min-w-0">
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center overflow-hidden">
               <img 
                 src="/logo.png" 
@@ -93,31 +81,33 @@ const Navbar = () => {
             <span className="font-heading font-bold text-base sm:text-xl text-foreground group-hover:text-primary transition-colors truncate">
               InnoVah<span className="text-primary">Tech</span>
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
+              <NavLink
                 key={link.name}
-                href={link.href}
-                onClick={() => setActiveHash(link.href)}
-                className={`animated-underline transition-colors font-medium ${
-                  activeHash === link.href
+                to={link.to}
+                end={link.to === "/"}
+                className={({ isActive }) =>
+                  `animated-underline transition-colors font-medium ${
+                    isActive
                     ? "text-primary"
                     : "text-muted-foreground hover:text-foreground"
-                }`}
+                  }`
+                }
               >
                 {link.name}
-              </a>
+              </NavLink>
             ))}
           </div>
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <a href="#contact" className="btn-primary text-sm">
+            <Link to="/contact" className="btn-primary text-sm">
               Get a Quote
-            </a>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -156,32 +146,29 @@ const Navbar = () => {
             >
               <div className="px-4 sm:px-6 pt-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] space-y-2">
                 {navLinks.map((link) => (
-                  <a
+                  <NavLink
                     key={link.name}
-                    href={link.href}
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      setActiveHash(link.href);
-                    }}
-                    className={`block py-2 text-base transition-colors touch-manipulation ${
-                      activeHash === link.href
+                    to={link.to}
+                    end={link.to === "/"}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={({ isActive }) =>
+                      `block py-2 text-base transition-colors touch-manipulation ${
+                        isActive
                         ? "text-primary"
                         : "text-muted-foreground hover:text-primary"
-                    }`}
+                      }`
+                    }
                   >
                     {link.name}
-                  </a>
+                  </NavLink>
                 ))}
-                <a
-                  href="#contact"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    setActiveHash("#contact");
-                  }}
+                <Link
+                  to="/contact"
+                  onClick={() => setIsMobileMenuOpen(false)}
                   className="btn-primary block text-center mt-3"
                 >
                   Get a Quote
-                </a>
+                </Link>
               </div>
             </motion.div>
           </>

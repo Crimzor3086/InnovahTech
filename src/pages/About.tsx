@@ -1,17 +1,17 @@
 import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/HeroSection";
+import WhyChooseSection from "@/components/WhyChooseSection";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
-const Index = () => {
+const About = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
-      <HeroSection />
+      <WhyChooseSection />
       <Footer />
       <WhatsAppButton />
     </div>
   );
 };
 
-export default Index;
+export default About;
