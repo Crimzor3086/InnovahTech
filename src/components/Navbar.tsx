@@ -12,6 +12,7 @@ const navLinks = [
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState("#home");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +40,27 @@ const Navbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    const updateActiveHash = () => {
+      setActiveHash(window.location.hash || "#home");
+    };
+
+    updateActiveHash();
+    window.addEventListener("hashchange", updateActiveHash);
+    return () => window.removeEventListener("hashchange", updateActiveHash);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -55,7 +77,10 @@ const Navbar = () => {
           {/* Logo */}
           <a
             href="#home"
-            onClick={() => setIsMobileMenuOpen(false)}
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              setActiveHash("#home");
+            }}
             className="flex items-center gap-2 sm:gap-3 group min-w-0"
           >
             <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center overflow-hidden">
@@ -76,7 +101,12 @@ const Navbar = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="animated-underline text-muted-foreground hover:text-foreground transition-colors font-medium"
+                onClick={() => setActiveHash(link.href)}
+                className={`animated-underline transition-colors font-medium ${
+                  activeHash === link.href
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 {link.name}
               </a>
@@ -92,10 +122,12 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
+            type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2.5 text-foreground rounded-lg border border-border/50 bg-card/50 touch-manipulation"
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-nav-menu"
           >
             {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
@@ -105,32 +137,54 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border shadow-xl max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain"
-          >
-            <div className="px-4 sm:px-6 pt-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] space-y-2">
-              {navLinks.map((link) => (
+          <>
+            <motion.button
+              type="button"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="md:hidden fixed inset-0 top-16 sm:top-20 bg-background/30 backdrop-blur-[1px]"
+              aria-label="Close menu overlay"
+            />
+            <motion.div
+              id="mobile-nav-menu"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="relative md:hidden bg-background/95 backdrop-blur-xl border-b border-border shadow-xl max-h-[calc(100dvh-4rem)] sm:max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain"
+            >
+              <div className="px-4 sm:px-6 pt-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] space-y-2">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      setActiveHash(link.href);
+                    }}
+                    className={`block py-2 text-base transition-colors touch-manipulation ${
+                      activeHash === link.href
+                        ? "text-primary"
+                        : "text-muted-foreground hover:text-primary"
+                    }`}
+                  >
+                    {link.name}
+                  </a>
+                ))}
                 <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block py-2 text-base text-muted-foreground hover:text-primary transition-colors touch-manipulation"
+                  href="#contact"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    setActiveHash("#contact");
+                  }}
+                  className="btn-primary block text-center mt-3"
                 >
-                  {link.name}
+                  Get a Quote
                 </a>
-              ))}
-              <a
-                href="#contact"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="btn-primary block text-center mt-3"
-              >
-                Get a Quote
-              </a>
-            </div>
-          </motion.div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.nav>
