@@ -21,6 +21,24 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -32,18 +50,22 @@ const Navbar = () => {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="flex items-center justify-between h-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
-          <a href="#home" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden">
+          <a
+            href="#home"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="flex items-center gap-2 sm:gap-3 group min-w-0"
+          >
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center overflow-hidden">
               <img 
                 src="/logo.png" 
                 alt="InnoVah Tech Logo" 
                 className="w-full h-full object-contain"
               />
             </div>
-            <span className="font-heading font-bold text-xl text-foreground group-hover:text-primary transition-colors">
+            <span className="font-heading font-bold text-base sm:text-xl text-foreground group-hover:text-primary transition-colors truncate">
               InnoVah<span className="text-primary">Tech</span>
             </span>
           </a>
@@ -71,9 +93,11 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-foreground"
+            className="md:hidden p-2.5 text-foreground rounded-lg border border-border/50 bg-card/50"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
@@ -85,15 +109,15 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border"
+            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border shadow-xl"
           >
-            <div className="px-6 py-6 space-y-4">
+            <div className="px-4 sm:px-6 py-5 space-y-2">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block text-lg text-muted-foreground hover:text-primary transition-colors"
+                  className="block py-2 text-base text-muted-foreground hover:text-primary transition-colors"
                 >
                   {link.name}
                 </a>
@@ -101,7 +125,7 @@ const Navbar = () => {
               <a
                 href="#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="btn-primary block text-center mt-4"
+                className="btn-primary block text-center mt-3"
               >
                 Get a Quote
               </a>

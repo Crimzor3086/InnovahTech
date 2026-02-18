@@ -1,13 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @import '@fontsource/space-grotesk/400.css';
 @import '@fontsource/space-grotesk/500.css';
 @import '@fontsource/space-grotesk/700.css';
 @import '@fontsource/inter/400.css';
 @import '@fontsource/inter/500.css';
 @import '@fontsource/inter/600.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   :root {
@@ -109,7 +109,7 @@
 
   /* Button Variants */
   .btn-primary {
-    @apply bg-primary text-primary-foreground font-semibold px-8 py-4 rounded-xl 
+    @apply bg-primary text-primary-foreground font-semibold px-6 py-3 text-sm sm:px-8 sm:py-4 sm:text-base rounded-xl 
            transition-all duration-300 hover:scale-105;
     box-shadow: 0 0 30px hsl(var(--gold) / 0.3);
   }
@@ -119,19 +119,19 @@
   }
 
   .btn-secondary {
-    @apply bg-secondary/80 text-secondary-foreground font-semibold px-8 py-4 rounded-xl 
+    @apply bg-secondary/80 text-secondary-foreground font-semibold px-6 py-3 text-sm sm:px-8 sm:py-4 sm:text-base rounded-xl 
            border border-border/50 transition-all duration-300 hover:border-primary/50
            backdrop-blur-sm;
   }
 
   /* Section Styling */
   .section-padding {
-    @apply py-24 px-6 md:px-12 lg:px-24;
+    @apply py-16 px-4 sm:py-20 sm:px-6 md:px-10 lg:py-24 lg:px-16 xl:px-24;
   }
 
   /* Capability Card Hover */
   .capability-card {
-    @apply glass-card p-8 transition-all duration-500 cursor-pointer;
+    @apply glass-card p-5 sm:p-6 lg:p-8 transition-all duration-500 cursor-pointer;
   }
 
   .capability-card:hover {
@@ -170,6 +170,13 @@
 
   .animated-underline:hover::after {
     @apply w-full;
+  }
+}
+
+@media (max-width: 640px) {
+  .btn-primary:hover,
+  .capability-card:hover {
+    transform: none;
   }
 }
 

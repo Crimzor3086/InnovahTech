@@ -3,16 +3,22 @@ import { useRef, useState, useEffect } from "react";
 import { Send, Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const ContactSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const isMobile = useIsMobile();
   const mouseX = useSpring(useMotionValue(0), { stiffness: 500, damping: 100 });
   const mouseY = useSpring(useMotionValue(0), { stiffness: 500, damping: 100 });
 
   useEffect(() => {
+    if (isMobile) {
+      return;
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -20,7 +26,7 @@ const ContactSection = () => {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, [isMobile, mouseX, mouseY]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -96,7 +102,7 @@ Message: ${message}`;
   };
 
   return (
-    <section id="contact" className="section-padding relative overflow-hidden">
+    <section id="contact" className="section-padding relative overflow-hidden scroll-mt-24">
       {/* Animated Gradient Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5 animate-gradient" />
@@ -129,13 +135,13 @@ Message: ${message}`;
 
       {/* Floating Orbs/Glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(6)].map((_, i) => (
+        {[...Array(isMobile ? 4 : 6)].map((_, i) => (
           <motion.div
             key={`orb-${i}`}
             className="absolute rounded-full blur-3xl"
             style={{
-              width: `${85 + Math.random() * 155}px`,
-              height: `${85 + Math.random() * 155}px`,
+              width: `${isMobile ? 75 + Math.random() * 95 : 85 + Math.random() * 155}px`,
+              height: `${isMobile ? 75 + Math.random() * 95 : 85 + Math.random() * 155}px`,
               background: `radial-gradient(circle, hsl(var(--primary)/${0.09 + Math.random() * 0.16}), transparent)`,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -158,7 +164,7 @@ Message: ${message}`;
 
       {/* Enhanced Floating Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(16)].map((_, i) => (
+        {[...Array(isMobile ? 8 : 16)].map((_, i) => (
           <motion.div
             key={`particle-${i}`}
             className="absolute rounded-full"
@@ -186,16 +192,18 @@ Message: ${message}`;
       </div>
 
       {/* Interactive Cursor Glow Effect */}
-      <motion.div
-        className="absolute w-80 h-80 rounded-full blur-3xl pointer-events-none opacity-12"
-        style={{
-          background: "radial-gradient(circle, hsl(var(--primary)/0.32), transparent 70%)",
-          x: mouseX,
-          y: mouseY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      />
+      {!isMobile && (
+        <motion.div
+          className="absolute w-80 h-80 rounded-full blur-3xl pointer-events-none opacity-12"
+          style={{
+            background: "radial-gradient(circle, hsl(var(--primary)/0.32), transparent 70%)",
+            x: mouseX,
+            y: mouseY,
+            translateX: "-50%",
+            translateY: "-50%",
+          }}
+        />
+      )}
 
       {/* Animated Communication Icons/Shapes */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -236,21 +244,21 @@ Message: ${message}`;
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
           <span className="text-primary font-medium tracking-wider uppercase text-sm">
             Get in Touch
           </span>
-          <h2 className="font-heading text-3xl md:text-5xl font-bold mt-4 mb-6">
+          <h2 className="font-heading text-2xl sm:text-3xl md:text-5xl font-bold mt-3 sm:mt-4 mb-4 sm:mb-6">
             Let's Build <span className="text-gradient">Together</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-base sm:text-lg">
             Ready to transform your business with intelligent technology? 
             Reach out via WhatsApp for the fastest response, or use the form below.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12">
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}
@@ -259,8 +267,8 @@ Message: ${message}`;
             className="space-y-6"
           >
             {/* WhatsApp CTA Banner */}
-            <div className="glass-card p-6 bg-gradient-to-r from-[#25D366]/10 to-[#25D366]/5 border border-[#25D366]/20">
-              <div className="flex items-center gap-4 mb-4">
+            <div className="glass-card p-5 sm:p-6 bg-gradient-to-r from-[#25D366]/10 to-[#25D366]/5 border border-[#25D366]/20">
+              <div className="flex items-center gap-3 sm:gap-4 mb-4">
                 <div className="w-12 h-12 rounded-xl bg-[#25D366]/20 flex items-center justify-center flex-shrink-0">
                   <MessageCircle className="w-6 h-6 text-[#25D366]" />
                 </div>
@@ -284,13 +292,13 @@ Message: ${message}`;
               </a>
             </div>
 
-            <form ref={formRef} onSubmit={handleSubmit} className="glass-card p-8 space-y-6">
+            <form ref={formRef} onSubmit={handleSubmit} className="glass-card p-5 sm:p-8 space-y-5 sm:space-y-6">
               <div className="text-center mb-4">
                 <p className="text-sm text-muted-foreground">
                   Or fill out the form below
                 </p>
               </div>
-              <div className="grid sm:grid-cols-2 gap-6">
+              <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label className="block text-sm font-medium mb-2">
                     Full Name
@@ -371,13 +379,13 @@ Message: ${message}`;
             transition={{ duration: 0.6, delay: 0.3 }}
             className="space-y-8"
           >
-            <div className="glass-card p-8">
-              <h3 className="font-heading text-2xl font-bold mb-6">
+            <div className="glass-card p-5 sm:p-8">
+              <h3 className="font-heading text-xl sm:text-2xl font-bold mb-5 sm:mb-6">
                 Contact Information
               </h3>
-              <div className="space-y-6">
+              <div className="space-y-5 sm:space-y-6">
                 {/* WhatsApp - Featured First */}
-                <div className="flex items-start gap-4 p-4 rounded-xl bg-[#25D366]/10 border border-[#25D366]/20">
+                <div className="flex items-start gap-3 sm:gap-4 p-4 rounded-xl bg-[#25D366]/10 border border-[#25D366]/20">
                   <div className="w-12 h-12 rounded-xl bg-[#25D366]/20 flex items-center justify-center flex-shrink-0">
                     <MessageCircle className="w-5 h-5 text-[#25D366]" />
                   </div>
@@ -392,7 +400,7 @@ Message: ${message}`;
                       href="https://wa.me/254702970187"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-[#25D366] transition-colors font-medium"
+                      className="text-muted-foreground hover:text-[#25D366] transition-colors font-medium break-all"
                     >
                       +254 702 970 187
                     </a>
@@ -425,7 +433,7 @@ Message: ${message}`;
                     <h4 className="font-medium mb-1">Email</h4>
                     <a
                       href="mailto:innovahtech2@gmail.com"
-                      className="text-muted-foreground hover:text-primary transition-colors"
+                      className="text-muted-foreground hover:text-primary transition-colors break-all"
                     >
                       innovahtech2@gmail.com
                     </a>
@@ -449,7 +457,7 @@ Message: ${message}`;
             </div>
 
             {/* CTA Card */}
-            <div className="glass-card p-8 border-[#25D366]/30 bg-gradient-to-br from-[#25D366]/10 to-transparent">
+            <div className="glass-card p-5 sm:p-8 border-[#25D366]/30 bg-gradient-to-br from-[#25D366]/10 to-transparent">
               <h3 className="font-heading text-xl font-bold mb-3">
                 Quick Response Guaranteed
               </h3>

@@ -2,6 +2,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useEffect } from "react";
 import { Network, Code, Blocks, Headphones } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const capabilities = [
   // 🌐 Web Development
@@ -97,10 +98,15 @@ const capabilities = [
 const CapabilitiesSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isMobile = useIsMobile();
   const mouseX = useSpring(useMotionValue(0), { stiffness: 500, damping: 100 });
   const mouseY = useSpring(useMotionValue(0), { stiffness: 500, damping: 100 });
 
   useEffect(() => {
+    if (isMobile) {
+      return;
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -108,10 +114,10 @@ const CapabilitiesSection = () => {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, [isMobile, mouseX, mouseY]);
 
   return (
-    <section id="services" className="section-padding relative overflow-hidden">
+    <section id="services" className="section-padding relative overflow-hidden scroll-mt-24">
       {/* Animated Gradient Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5 animate-gradient" />
@@ -144,13 +150,13 @@ const CapabilitiesSection = () => {
 
       {/* Floating Orbs/Glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(6)].map((_, i) => (
+        {[...Array(isMobile ? 4 : 6)].map((_, i) => (
           <motion.div
             key={`orb-${i}`}
             className="absolute rounded-full blur-3xl"
             style={{
-              width: `${80 + Math.random() * 150}px`,
-              height: `${80 + Math.random() * 150}px`,
+              width: `${isMobile ? 70 + Math.random() * 90 : 80 + Math.random() * 150}px`,
+              height: `${isMobile ? 70 + Math.random() * 90 : 80 + Math.random() * 150}px`,
               background: `radial-gradient(circle, hsl(var(--primary)/${0.08 + Math.random() * 0.15}), transparent)`,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -173,7 +179,7 @@ const CapabilitiesSection = () => {
 
       {/* Enhanced Floating Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
+        {[...Array(isMobile ? 8 : 15)].map((_, i) => (
           <motion.div
             key={`particle-${i}`}
             className="absolute rounded-full"
@@ -201,16 +207,18 @@ const CapabilitiesSection = () => {
       </div>
 
       {/* Interactive Cursor Glow Effect */}
-      <motion.div
-        className="absolute w-80 h-80 rounded-full blur-3xl pointer-events-none opacity-15"
-        style={{
-          background: "radial-gradient(circle, hsl(var(--primary)/0.3), transparent 70%)",
-          x: mouseX,
-          y: mouseY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      />
+      {!isMobile && (
+        <motion.div
+          className="absolute w-80 h-80 rounded-full blur-3xl pointer-events-none opacity-15"
+          style={{
+            background: "radial-gradient(circle, hsl(var(--primary)/0.3), transparent 70%)",
+            x: mouseX,
+            y: mouseY,
+            translateX: "-50%",
+            translateY: "-50%",
+          }}
+        />
+      )}
 
       {/* Animated Connection Dots */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -251,22 +259,22 @@ const CapabilitiesSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-16"
         >
           <span className="text-primary font-medium tracking-wider uppercase text-sm">
             Core Capabilities
           </span>
-          <h2 className="font-heading text-3xl md:text-5xl font-bold mt-4 mb-6">
+          <h2 className="font-heading text-2xl sm:text-3xl md:text-5xl font-bold mt-3 sm:mt-4 mb-4 sm:mb-6">
             Comprehensive Technology <span className="text-gradient">Solutions</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-base sm:text-lg">
             From infrastructure to intelligent systems, we deliver end-to-end
             technology solutions that drive business transformation.
           </p>
         </motion.div>
 
         {/* Capabilities Grid */}
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
           {capabilities.map((capability, index) => (
             <motion.div
               key={capability.title}
@@ -285,17 +293,17 @@ const CapabilitiesSection = () => {
               )}
 
               {/* Icon */}
-              <div className={`w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors ${capability.comingSoon ? 'opacity-60' : ''}`}>
-                <capability.icon className={`w-7 h-7 text-primary ${capability.comingSoon ? 'opacity-60' : ''}`} />
+              <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-primary/20 transition-colors ${capability.comingSoon ? 'opacity-60' : ''}`}>
+                <capability.icon className={`w-6 h-6 sm:w-7 sm:h-7 text-primary ${capability.comingSoon ? 'opacity-60' : ''}`} />
               </div>
 
               {/* Title */}
-              <h3 className={`font-heading text-2xl font-bold mb-3 group-hover:text-primary transition-colors ${capability.comingSoon ? 'opacity-75' : ''}`}>
+              <h3 className={`font-heading text-xl sm:text-2xl font-bold mb-2 sm:mb-3 leading-tight group-hover:text-primary transition-colors ${capability.comingSoon ? 'opacity-75' : ''}`}>
                 {capability.title}
               </h3>
 
               {/* Description */}
-              <p className={`text-muted-foreground mb-6 leading-relaxed ${capability.comingSoon ? 'opacity-70' : ''}`}>
+              <p className={`text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6 leading-relaxed ${capability.comingSoon ? 'opacity-70' : ''}`}>
                 {capability.description}
               </p>
 
@@ -313,7 +321,7 @@ const CapabilitiesSection = () => {
 
               {/* Pricing */}
               {('priceUSD' in capability || 'priceKES' in capability) && (
-                <div className={`mt-5 pt-5 border-t border-border/50 ${capability.comingSoon ? 'opacity-60' : ''}`}>
+                <div className={`mt-4 sm:mt-5 pt-4 sm:pt-5 border-t border-border/50 ${capability.comingSoon ? 'opacity-60' : ''}`}>
                   {('priceUSD' in capability) && (
                     <p className="text-sm font-medium">
                       USD: <span className="text-primary">{(capability as any).priceUSD}</span>

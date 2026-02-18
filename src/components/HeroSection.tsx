@@ -2,12 +2,18 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useEffect } from "react";
 import heroBg from "@/assets/hero-bg.jpg";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const HeroSection = () => {
+  const isMobile = useIsMobile();
   const mouseX = useSpring(useMotionValue(0), { stiffness: 500, damping: 100 });
   const mouseY = useSpring(useMotionValue(0), { stiffness: 500, damping: 100 });
 
   useEffect(() => {
+    if (isMobile) {
+      return;
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -15,12 +21,12 @@ const HeroSection = () => {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+  }, [isMobile, mouseX, mouseY]);
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-12 sm:pb-0 scroll-mt-24"
     >
       {/* Animated Gradient Background */}
       <div className="absolute inset-0">
@@ -60,13 +66,13 @@ const HeroSection = () => {
 
       {/* Floating Orbs/Glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map((_, i) => (
+        {[...Array(isMobile ? 4 : 8)].map((_, i) => (
           <motion.div
             key={`orb-${i}`}
             className="absolute rounded-full blur-3xl"
             style={{
-              width: `${100 + Math.random() * 200}px`,
-              height: `${100 + Math.random() * 200}px`,
+              width: `${isMobile ? 90 + Math.random() * 120 : 100 + Math.random() * 200}px`,
+              height: `${isMobile ? 90 + Math.random() * 120 : 100 + Math.random() * 200}px`,
               background: `radial-gradient(circle, hsl(var(--primary)/${0.1 + Math.random() * 0.2}), transparent)`,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -89,7 +95,7 @@ const HeroSection = () => {
 
       {/* Enhanced Floating Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {[...Array(isMobile ? 10 : 20)].map((_, i) => (
           <motion.div
             key={`particle-${i}`}
             className="absolute rounded-full"
@@ -117,19 +123,21 @@ const HeroSection = () => {
       </div>
 
       {/* Interactive Cursor Glow Effect */}
-      <motion.div
-        className="absolute w-96 h-96 rounded-full blur-3xl pointer-events-none opacity-20"
-        style={{
-          background: "radial-gradient(circle, hsl(var(--primary)/0.4), transparent 70%)",
-          x: mouseX,
-          y: mouseY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      />
+      {!isMobile && (
+        <motion.div
+          className="absolute w-96 h-96 rounded-full blur-3xl pointer-events-none opacity-20"
+          style={{
+            background: "radial-gradient(circle, hsl(var(--primary)/0.4), transparent 70%)",
+            x: mouseX,
+            y: mouseY,
+            translateX: "-50%",
+            translateY: "-50%",
+          }}
+        />
+      )}
 
       {/* Animated Connection Lines */}
-      <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none">
+      <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none hidden sm:block">
         <defs>
           <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0" />
@@ -162,16 +170,16 @@ const HeroSection = () => {
       </svg>
 
       {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 text-center">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 glass-card px-4 py-2 mb-8"
+          className="inline-flex items-center gap-2 glass-card px-3 sm:px-4 py-2 mb-6 sm:mb-8"
         >
           <Sparkles className="w-4 h-4 text-primary" />
-          <span className="text-sm text-muted-foreground">
+          <span className="text-xs sm:text-sm text-muted-foreground">
             Where Innovation Connects to Life
           </span>
         </motion.div>
@@ -181,7 +189,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-heading text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
+          className="font-heading text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.15] mb-5 sm:mb-6"
         >
           Building Intelligent Systems
           <br />
@@ -195,7 +203,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10"
+          className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 sm:mb-10"
         >
           We design, deploy, and scale secure digital infrastructure, software
           platforms, and intelligent systems for modern organizations.
@@ -206,13 +214,13 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center"
         >
-          <a href="#contact" className="btn-primary inline-flex items-center gap-2 group">
+          <a href="#contact" className="btn-primary inline-flex items-center justify-center gap-2 group w-full sm:w-auto">
             Request a Quote
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
-          <a href="#services" className="btn-secondary inline-flex items-center gap-2">
+          <a href="#services" className="btn-secondary inline-flex items-center justify-center gap-2 w-full sm:w-auto">
             Explore Our Solutions
           </a>
         </motion.div>
@@ -222,7 +230,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-16 flex flex-wrap justify-center gap-6 md:gap-10"
+          className="mt-12 sm:mt-16 flex flex-wrap justify-center gap-3 sm:gap-6 md:gap-10"
         >
           {["Security-Driven", "Scalable", "Africa-First", "Globally Relevant"].map(
             (keyword, index) => (
@@ -231,7 +239,7 @@ const HeroSection = () => {
                 className="flex items-center gap-2 text-muted-foreground"
               >
                 <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse-slow" />
-                <span className="text-sm font-medium tracking-wide uppercase">
+                <span className="text-xs sm:text-sm font-medium tracking-wide uppercase">
                   {keyword}
                 </span>
               </div>
@@ -245,7 +253,7 @@ const HeroSection = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 hidden sm:block"
       >
         <motion.div
           animate={{ y: [0, 10, 0] }}
