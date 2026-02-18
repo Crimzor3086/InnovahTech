@@ -136,7 +136,7 @@ const CapabilitiesSection = () => {
 
       {/* Animated Grid Pattern */}
       <motion.div 
-        className="absolute inset-0 grid-pattern opacity-15"
+        className="absolute inset-0 grid-pattern opacity-15 hidden sm:block"
         animate={{
           backgroundPosition: ["0% 0%", "100% 100%"],
         }}
@@ -178,33 +178,35 @@ const CapabilitiesSection = () => {
       </div>
 
       {/* Enhanced Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(isMobile ? 8 : 15)].map((_, i) => (
-          <motion.div
-            key={`particle-${i}`}
-            className="absolute rounded-full"
-            style={{
-              width: `${1.5 + Math.random() * 3}px`,
-              height: `${1.5 + Math.random() * 3}px`,
-              background: `hsl(var(--primary)/${0.25 + Math.random() * 0.35})`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -80 - Math.random() * 150],
-              x: [0, Math.random() * 80 - 40],
-              opacity: [0, 0.8, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: 12 + Math.random() * 12,
-              repeat: Infinity,
-              ease: "easeOut",
-              delay: i * 0.4,
-            }}
-          />
-        ))}
-      </div>
+      {!isMobile && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(15)].map((_, i) => (
+            <motion.div
+              key={`particle-${i}`}
+              className="absolute rounded-full"
+              style={{
+                width: `${1.5 + Math.random() * 3}px`,
+                height: `${1.5 + Math.random() * 3}px`,
+                background: `hsl(var(--primary)/${0.25 + Math.random() * 0.35})`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -80 - Math.random() * 150],
+                x: [0, Math.random() * 80 - 40],
+                opacity: [0, 0.8, 0],
+                scale: [0, 1, 0],
+              }}
+              transition={{
+                duration: 12 + Math.random() * 12,
+                repeat: Infinity,
+                ease: "easeOut",
+                delay: i * 0.4,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Interactive Cursor Glow Effect */}
       {!isMobile && (
@@ -221,7 +223,7 @@ const CapabilitiesSection = () => {
       )}
 
       {/* Animated Connection Dots */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden sm:block">
         <svg className="w-full h-full opacity-8">
           <defs>
             <linearGradient id="dotGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -298,7 +300,7 @@ const CapabilitiesSection = () => {
               </div>
 
               {/* Title */}
-              <h3 className={`font-heading text-xl sm:text-2xl font-bold mb-2 sm:mb-3 leading-tight group-hover:text-primary transition-colors ${capability.comingSoon ? 'opacity-75' : ''}`}>
+              <h3 className={`font-heading text-xl sm:text-2xl font-bold mb-2 sm:mb-3 leading-tight break-words group-hover:text-primary transition-colors ${capability.comingSoon ? 'opacity-75' : ''}`}>
                 {capability.title}
               </h3>
 
@@ -312,7 +314,7 @@ const CapabilitiesSection = () => {
                 {capability.features.map((feature) => (
                   <span
                     key={feature}
-                    className={`px-3 py-1 text-sm rounded-full bg-secondary/80 text-secondary-foreground border border-border/50 ${capability.comingSoon ? 'opacity-60' : ''}`}
+                    className={`px-3 py-1 text-xs sm:text-sm rounded-full bg-secondary/80 text-secondary-foreground border border-border/50 ${capability.comingSoon ? 'opacity-60' : ''}`}
                   >
                     {feature}
                   </span>

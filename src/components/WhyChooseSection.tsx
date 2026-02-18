@@ -69,7 +69,7 @@ const WhyChooseSection = () => {
 
       {/* Animated Grid Pattern */}
       <motion.div 
-        className="absolute inset-0 grid-pattern opacity-15"
+        className="absolute inset-0 grid-pattern opacity-15 hidden sm:block"
         animate={{
           backgroundPosition: ["0% 0%", "100% 100%"],
         }}
@@ -111,33 +111,35 @@ const WhyChooseSection = () => {
       </div>
 
       {/* Enhanced Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(isMobile ? 9 : 18)].map((_, i) => (
-          <motion.div
-            key={`particle-${i}`}
-            className="absolute rounded-full"
-            style={{
-              width: `${2 + Math.random() * 3.5}px`,
-              height: `${2 + Math.random() * 3.5}px`,
-              background: `hsl(var(--primary)/${0.3 + Math.random() * 0.4})`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -90 - Math.random() * 160],
-              x: [0, Math.random() * 90 - 45],
-              opacity: [0, 0.9, 0],
-              scale: [0, 1.2, 0],
-            }}
-            transition={{
-              duration: 11 + Math.random() * 13,
-              repeat: Infinity,
-              ease: "easeOut",
-              delay: i * 0.35,
-            }}
-          />
-        ))}
-      </div>
+      {!isMobile && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(18)].map((_, i) => (
+            <motion.div
+              key={`particle-${i}`}
+              className="absolute rounded-full"
+              style={{
+                width: `${2 + Math.random() * 3.5}px`,
+                height: `${2 + Math.random() * 3.5}px`,
+                background: `hsl(var(--primary)/${0.3 + Math.random() * 0.4})`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -90 - Math.random() * 160],
+                x: [0, Math.random() * 90 - 45],
+                opacity: [0, 0.9, 0],
+                scale: [0, 1.2, 0],
+              }}
+              transition={{
+                duration: 11 + Math.random() * 13,
+                repeat: Infinity,
+                ease: "easeOut",
+                delay: i * 0.35,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Interactive Cursor Glow Effect */}
       {!isMobile && (
@@ -154,7 +156,7 @@ const WhyChooseSection = () => {
       )}
 
       {/* Animated Geometric Shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden sm:block">
         <svg className="w-full h-full opacity-6">
           <defs>
             <linearGradient id="shapeGradient" x1="0%" y1="0%" x2="100%" y2="100%">

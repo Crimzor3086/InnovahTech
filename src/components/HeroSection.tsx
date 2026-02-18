@@ -52,7 +52,7 @@ const HeroSection = () => {
 
       {/* Animated Grid Pattern */}
       <motion.div 
-        className="absolute inset-0 grid-pattern opacity-20"
+        className="absolute inset-0 grid-pattern opacity-20 hidden sm:block"
         animate={{
           backgroundPosition: ["0% 0%", "100% 100%"],
         }}
@@ -94,33 +94,35 @@ const HeroSection = () => {
       </div>
 
       {/* Enhanced Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(isMobile ? 10 : 20)].map((_, i) => (
-          <motion.div
-            key={`particle-${i}`}
-            className="absolute rounded-full"
-            style={{
-              width: `${2 + Math.random() * 4}px`,
-              height: `${2 + Math.random() * 4}px`,
-              background: `hsl(var(--primary)/${0.3 + Math.random() * 0.4})`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -100 - Math.random() * 200],
-              x: [0, Math.random() * 100 - 50],
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-            }}
-            transition={{
-              duration: 10 + Math.random() * 15,
-              repeat: Infinity,
-              ease: "easeOut",
-              delay: i * 0.3,
-            }}
-          />
-        ))}
-      </div>
+      {!isMobile && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={`particle-${i}`}
+              className="absolute rounded-full"
+              style={{
+                width: `${2 + Math.random() * 4}px`,
+                height: `${2 + Math.random() * 4}px`,
+                background: `hsl(var(--primary)/${0.3 + Math.random() * 0.4})`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -100 - Math.random() * 200],
+                x: [0, Math.random() * 100 - 50],
+                opacity: [0, 1, 0],
+                scale: [0, 1, 0],
+              }}
+              transition={{
+                duration: 10 + Math.random() * 15,
+                repeat: Infinity,
+                ease: "easeOut",
+                delay: i * 0.3,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Interactive Cursor Glow Effect */}
       {!isMobile && (

@@ -121,7 +121,7 @@ Message: ${message}`;
 
       {/* Animated Grid Pattern */}
       <motion.div 
-        className="absolute inset-0 grid-pattern opacity-15"
+        className="absolute inset-0 grid-pattern opacity-15 hidden sm:block"
         animate={{
           backgroundPosition: ["0% 0%", "100% 100%"],
         }}
@@ -163,33 +163,35 @@ Message: ${message}`;
       </div>
 
       {/* Enhanced Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(isMobile ? 8 : 16)].map((_, i) => (
-          <motion.div
-            key={`particle-${i}`}
-            className="absolute rounded-full"
-            style={{
-              width: `${1.8 + Math.random() * 3.2}px`,
-              height: `${1.8 + Math.random() * 3.2}px`,
-              background: `hsl(var(--primary)/${0.28 + Math.random() * 0.38})`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -85 - Math.random() * 155],
-              x: [0, Math.random() * 85 - 42.5],
-              opacity: [0, 0.85, 0],
-              scale: [0, 1.15, 0],
-            }}
-            transition={{
-              duration: 10 + Math.random() * 14,
-              repeat: Infinity,
-              ease: "easeOut",
-              delay: i * 0.38,
-            }}
-          />
-        ))}
-      </div>
+      {!isMobile && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(16)].map((_, i) => (
+            <motion.div
+              key={`particle-${i}`}
+              className="absolute rounded-full"
+              style={{
+                width: `${1.8 + Math.random() * 3.2}px`,
+                height: `${1.8 + Math.random() * 3.2}px`,
+                background: `hsl(var(--primary)/${0.28 + Math.random() * 0.38})`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -85 - Math.random() * 155],
+                x: [0, Math.random() * 85 - 42.5],
+                opacity: [0, 0.85, 0],
+                scale: [0, 1.15, 0],
+              }}
+              transition={{
+                duration: 10 + Math.random() * 14,
+                repeat: Infinity,
+                ease: "easeOut",
+                delay: i * 0.38,
+              }}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Interactive Cursor Glow Effect */}
       {!isMobile && (
@@ -206,7 +208,7 @@ Message: ${message}`;
       )}
 
       {/* Animated Communication Icons/Shapes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden sm:block">
         <svg className="w-full h-full opacity-[0.07]">
           <defs>
             <linearGradient id="commGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -307,7 +309,7 @@ Message: ${message}`;
                     type="text"
                     name="name"
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
+                    className="w-full px-4 py-3 text-base rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
                     placeholder="John Doe"
                   />
                 </div>
@@ -319,7 +321,7 @@ Message: ${message}`;
                     type="email"
                     name="email"
                     required
-                    className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
+                    className="w-full px-4 py-3 text-base rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -332,7 +334,7 @@ Message: ${message}`;
                 <select 
                   name="service"
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
+                  className="w-full px-4 py-3 text-base rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
                 >
                   <option value="">Select a service</option>
                   <option value="networking">Internet & Networking</option>
@@ -350,7 +352,7 @@ Message: ${message}`;
                   name="message"
                   rows={4}
                   required
-                  className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors resize-none"
+                  className="w-full px-4 py-3 text-base rounded-xl bg-secondary/50 border border-border/50 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors resize-none"
                   placeholder="Tell us about your project..."
                 />
               </div>
@@ -390,7 +392,7 @@ Message: ${message}`;
                     <MessageCircle className="w-5 h-5 text-[#25D366]" />
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <h4 className="font-medium">WhatsApp</h4>
                       <span className="text-xs bg-[#25D366] text-white px-2 py-0.5 rounded-full font-medium">
                         Recommended

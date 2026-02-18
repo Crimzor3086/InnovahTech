@@ -93,7 +93,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2.5 text-foreground rounded-lg border border-border/50 bg-card/50"
+            className="md:hidden p-2.5 text-foreground rounded-lg border border-border/50 bg-card/50 touch-manipulation"
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
           >
@@ -109,15 +109,15 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border shadow-xl"
+            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border shadow-xl max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain"
           >
-            <div className="px-4 sm:px-6 py-5 space-y-2">
+            <div className="px-4 sm:px-6 pt-5 pb-[calc(1.25rem+env(safe-area-inset-bottom))] space-y-2">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block py-2 text-base text-muted-foreground hover:text-primary transition-colors"
+                  className="block py-2 text-base text-muted-foreground hover:text-primary transition-colors touch-manipulation"
                 >
                   {link.name}
                 </a>
