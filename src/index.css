@@ -122,6 +122,104 @@
     z-index: 1;
   }
 
+  .page-bg-about {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(circle at 14% 18%, hsl(28 96% 58% / 0.16), transparent 34%),
+      linear-gradient(150deg, hsl(222 47% 8%) 0%, hsl(219 44% 12%) 55%, hsl(223 36% 10%) 100%);
+  }
+
+  .page-bg-services {
+    position: relative;
+    isolation: isolate;
+    background:
+      repeating-linear-gradient(0deg, hsl(0 0% 100% / 0.035) 0 1px, transparent 1px 44px),
+      linear-gradient(140deg, hsl(223 42% 9%) 0%, hsl(221 38% 13%) 60%, hsl(20 54% 14%) 100%);
+  }
+
+  .page-bg-solutions {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(circle at 80% 22%, hsl(28 96% 58% / 0.15), transparent 30%),
+      radial-gradient(circle at 20% 74%, hsl(208 90% 62% / 0.14), transparent 28%),
+      linear-gradient(160deg, hsl(222 47% 8%) 0%, hsl(222 42% 11%) 100%);
+  }
+
+  .page-bg-industries {
+    position: relative;
+    isolation: isolate;
+    background:
+      repeating-linear-gradient(35deg, hsl(0 0% 100% / 0.03) 0 1px, transparent 1px 76px),
+      linear-gradient(130deg, hsl(224 44% 8%) 0%, hsl(218 38% 12%) 55%, hsl(28 50% 14%) 100%);
+  }
+
+  .page-bg-tech {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(circle at 30% 22%, hsl(28 96% 58% / 0.17), transparent 30%),
+      radial-gradient(circle at 72% 75%, hsl(190 82% 56% / 0.14), transparent 34%),
+      linear-gradient(145deg, hsl(223 46% 8%) 0%, hsl(220 40% 12%) 100%);
+  }
+
+  .page-bg-why {
+    position: relative;
+    isolation: isolate;
+    background:
+      repeating-linear-gradient(-30deg, hsl(0 0% 100% / 0.025) 0 1px, transparent 1px 84px),
+      linear-gradient(135deg, hsl(224 42% 8%) 0%, hsl(222 36% 11%) 55%, hsl(16 52% 14%) 100%);
+  }
+
+  .page-bg-insights {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(circle at 78% 18%, hsl(28 96% 58% / 0.16), transparent 27%),
+      linear-gradient(160deg, hsl(222 47% 8%) 0%, hsl(220 39% 12%) 70%, hsl(28 40% 15%) 100%);
+  }
+
+  .page-bg-contact {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(circle at 12% 78%, hsl(28 96% 58% / 0.18), transparent 34%),
+      linear-gradient(145deg, hsl(223 44% 8%) 0%, hsl(221 40% 12%) 55%, hsl(30 48% 15%) 100%);
+  }
+
+  .page-bg-about::before,
+  .page-bg-services::before,
+  .page-bg-solutions::before,
+  .page-bg-industries::before,
+  .page-bg-tech::before,
+  .page-bg-why::before,
+  .page-bg-insights::before,
+  .page-bg-contact::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(circle at 15% 20%, hsl(0 0% 100% / 0.05) 0 1px, transparent 2px),
+      radial-gradient(circle at 68% 62%, hsl(0 0% 100% / 0.05) 0 1px, transparent 2px),
+      radial-gradient(circle at 84% 36%, hsl(0 0% 100% / 0.04) 0 1px, transparent 2px);
+    animation: neuralShift 22s linear infinite;
+  }
+
+  .page-bg-about > *,
+  .page-bg-services > *,
+  .page-bg-solutions > *,
+  .page-bg-industries > *,
+  .page-bg-tech > *,
+  .page-bg-why > *,
+  .page-bg-insights > *,
+  .page-bg-contact > * {
+    position: relative;
+    z-index: 1;
+  }
+
   @keyframes neuralShift {
     0% {
       transform: translate3d(0, 0, 0);

@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 
 const SolutionsPage = () => {
   return (
-    <div className="min-h-screen bg-background ai-neural-bg flex flex-col">
+    <div className="min-h-screen bg-background page-bg-solutions flex flex-col">
       <Navbar />
       <SolutionsSection />
       <Footer />
