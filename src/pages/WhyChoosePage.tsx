@@ -1,15 +1,15 @@
 import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/HeroSection";
+import WhyChooseSection from "@/components/WhyChooseSection";
 import Footer from "@/components/Footer";
 
-const Index = () => {
+const WhyChoosePage = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <HeroSection />
+      <WhyChooseSection />
       <Footer />
     </div>
   );
 };
 
-export default Index;
+export default WhyChoosePage;

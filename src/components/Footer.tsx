@@ -1,81 +1,71 @@
 import { Link } from "react-router-dom";
 
-const quickLinks = [
-  { label: "Home", to: "/" },
-  { label: "Services", to: "/services" },
-  { label: "About", to: "/about" },
-  { label: "Contact", to: "/contact" },
-];
+const footerLinks = {
+  Services: [
+    { label: "Software Engineering", href: "/services" },
+    { label: "Blockchain & Web3", href: "/services" },
+    { label: "AI & Data Systems", href: "/services" },
+    { label: "Cloud & Infrastructure", href: "/services" },
+  ],
+  Company: [
+    { label: "About", href: "/about" },
+    { label: "Careers", href: "/insights" },
+    { label: "Insights", href: "/insights" },
+    { label: "Contact", href: "/contact" },
+  ],
+  Legal: [
+    { label: "Privacy Policy", href: "#" },
+    { label: "Terms of Service", href: "#" },
+    { label: "Cookie Policy", href: "#" },
+  ],
+};
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="border-t border-border/50 bg-card/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-10 sm:py-12">
-        <div className="grid md:grid-cols-4 gap-8 sm:gap-10">
-          {/* Brand */}
-          <div className="md:col-span-2">
-            <Link to="/" className="flex items-center gap-2 sm:gap-3 mb-4 w-fit">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center overflow-hidden">
-                <img 
-                  src="/logo.png" 
-                  alt="InnoVah Tech Logo" 
-                  className="w-full h-full object-contain"
-                />
+    <footer className="border-t border-border bg-card py-16">
+      <div className="container mx-auto px-6">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
+          <div className="lg:col-span-2">
+            <div className="mb-4 flex items-center gap-2.5">
+              <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
+                <span className="font-heading text-sm font-black text-primary-foreground">V</span>
               </div>
-              <span className="font-heading font-bold text-lg sm:text-xl">
-                InnoVah<span className="text-primary">Tech</span>
-              </span>
-            </Link>
-            <p className="text-muted-foreground max-w-sm leading-relaxed text-sm sm:text-base">
-              Where Innovation Connects to Life. Building secure, scalable,
-              and intelligent systems for modern organizations.
+              <span className="font-heading text-xl font-bold text-foreground">VAHNOVA</span>
+            </div>
+            <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
+              Engineering intelligent digital systems for the modern enterprise.
+              Scalable platforms, automation, and advanced infrastructure.
             </p>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-heading font-bold mb-3 sm:mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              {quickLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    to={link.to}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div>
-            <h4 className="font-heading font-bold mb-3 sm:mb-4">Services</h4>
-            <ul className="space-y-2 text-muted-foreground">
-              <li>Networking Infrastructure</li>
-              <li>Software Development</li>
-              <li>Blockchain & Web3</li>
-              <li>IT Consulting</li>
-            </ul>
-          </div>
+          {Object.entries(footerLinks).map(([category, links]) => (
+            <div key={category}>
+              <h4 className="mb-4 font-heading text-sm font-bold uppercase tracking-widest text-foreground">
+                {category}
+              </h4>
+              <ul className="space-y-2.5">
+                {links.map((link) => (
+                  <li key={link.label}>
+                    {link.href.startsWith("#") ? (
+                      <a href={link.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link to={link.href} className="text-sm text-muted-foreground transition-colors hover:text-foreground">
+                        {link.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4">
-          <p className="text-xs sm:text-sm text-muted-foreground text-center md:text-left">
-            © {currentYear} InnoVah Tech. All rights reserved.
+        <div className="mt-12 border-t border-border pt-8">
+          <p className="text-center text-xs text-muted-foreground">
+            © {new Date().getFullYear()} VAHNOVA Technologies. All rights reserved.
           </p>
-          <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 sm:gap-6 text-xs sm:text-sm text-muted-foreground">
-            <a href="#" className="hover:text-primary transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-primary transition-colors">
-              Terms of Service
-            </a>
-          </div>
         </div>
       </div>
     </footer>
