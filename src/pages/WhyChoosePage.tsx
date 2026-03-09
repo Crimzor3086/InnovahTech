@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 
 const WhyChoosePage = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background ai-neural-bg flex flex-col">
       <Navbar />
       <WhyChooseSection />
       <Footer />

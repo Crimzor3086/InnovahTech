@@ -6,48 +6,48 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 216 28% 12%;
+    --background: 222 47% 8%;
+    --foreground: 0 0% 100%;
 
-    --card: 210 20% 98%;
-    --card-foreground: 216 28% 12%;
+    --card: 223 36% 12%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 216 28% 12%;
+    --popover: 223 36% 12%;
+    --popover-foreground: 0 0% 100%;
 
     --primary: 216 76% 15%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 20% 96%;
-    --secondary-foreground: 216 28% 12%;
+    --secondary: 223 28% 16%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 20% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 223 28% 15%;
+    --muted-foreground: 0 0% 100%;
 
-    --accent: 195 100% 50%;
-    --accent-foreground: 216 76% 15%;
+    --accent: 28 96% 58%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 20% 90%;
-    --input: 214 20% 90%;
-    --ring: 216 76% 15%;
+    --border: 222 24% 24%;
+    --input: 222 24% 24%;
+    --ring: 28 96% 58%;
 
     --radius: 0.75rem;
 
     /* Brand tokens */
     --deep-blue: 216 76% 15%;
-    --cyan: 195 100% 50%;
-    --violet: 245 100% 68%;
+    --cyan: 28 96% 58%;
+    --violet: 34 90% 62%;
     --graphite: 215 39% 17%;
     --neutral-gray: 215 16% 47%;
     --light-gray: 210 20% 97%;
 
     /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(216 76% 15%) 0%, hsl(215 39% 23%) 100%);
-    --gradient-cyan: linear-gradient(135deg, hsl(195 100% 50%) 0%, hsl(245 100% 68%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(210 20% 97%) 0%, hsl(0 0% 100%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(222 47% 8%) 0%, hsl(218 45% 13%) 60%, hsl(24 65% 16%) 100%);
+    --gradient-cyan: linear-gradient(135deg, hsl(28 96% 58%) 0%, hsl(34 90% 62%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(223 40% 10%) 0%, hsl(222 47% 8%) 100%);
 
     /* Shadows */
     --shadow-sm: 0 1px 3px 0 hsl(0 0% 0% / 0.06);
@@ -82,15 +82,55 @@
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(216 76% 15%), hsl(195 100% 50%));
+    background-image: linear-gradient(135deg, hsl(28 96% 58%), hsl(34 90% 62%));
   }
 
   .bg-dark-section {
-    background: linear-gradient(135deg, hsl(216 76% 15%) 0%, hsl(215 39% 20%) 100%);
+    background: var(--gradient-hero);
   }
 
   .glow-line {
-    background: linear-gradient(90deg, transparent, hsl(195 100% 50% / 0.4), transparent);
+    background: linear-gradient(90deg, transparent, hsl(28 96% 58% / 0.45), transparent);
     height: 1px;
+  }
+
+  .ai-neural-bg {
+    position: relative;
+    isolation: isolate;
+    background: var(--gradient-subtle);
+  }
+
+  .ai-neural-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+      repeating-linear-gradient(36deg, hsl(0 0% 100% / 0.045) 0 1px, transparent 1px 80px),
+      repeating-linear-gradient(-36deg, hsl(0 0% 100% / 0.03) 0 1px, transparent 1px 72px),
+      radial-gradient(circle at 12% 18%, hsl(28 96% 58% / 0.22) 0 2px, transparent 3px),
+      radial-gradient(circle at 28% 66%, hsl(28 96% 58% / 0.25) 0 2px, transparent 3px),
+      radial-gradient(circle at 55% 22%, hsl(28 96% 58% / 0.2) 0 2px, transparent 3px),
+      radial-gradient(circle at 78% 73%, hsl(28 96% 58% / 0.22) 0 2px, transparent 3px),
+      radial-gradient(circle at 90% 30%, hsl(28 96% 58% / 0.26) 0 2px, transparent 3px);
+    animation: neuralShift 18s linear infinite;
+  }
+
+  .ai-neural-bg > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes neuralShift {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(-0.8%, -0.8%, 0);
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
   }
 }
