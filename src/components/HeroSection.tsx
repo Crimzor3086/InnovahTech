@@ -41,29 +41,29 @@ const HeroSection = () => {
           >
             <div className="mb-5 inline-flex h-16 w-16 items-center justify-center rounded-xl border border-primary-foreground/20 bg-primary-foreground/10 shadow-[0_0_28px_hsl(28_96%_58%_/_0.18)]"><img src="/logo.png" alt="VAHNOVA logo" className="h-11 w-11 rounded-lg object-cover" /></div>
 
-            <h1 className="mb-3 font-heading text-3xl font-extrabold leading-[1.1] tracking-tight text-white drop-shadow-[0_2px_10px_hsl(222_47%_8%_/_0.6)] sm:text-4xl md:text-5xl">
+            <h1 className="mb-3 font-heading text-3xl font-extrabold leading-[1.1] tracking-tight text-[#d6c9aa] drop-shadow-[0_2px_10px_hsl(222_47%_8%_/_0.6)] sm:text-4xl md:text-5xl">
               VAHNOVA TECHNOLOGIES
             </h1>
 
-            <p className="mx-auto mb-7 max-w-xl text-base leading-relaxed text-white drop-shadow-[0_1px_4px_hsl(222_47%_8%_/_0.9)] md:text-xl">
+            <p className="mx-auto mb-7 max-w-xl text-base leading-relaxed text-[#d4c9b1] drop-shadow-[0_1px_4px_hsl(222_47%_8%_/_0.9)] md:text-xl">
               Where Innovation Connects to Life.
             </p>
 
-            <p className="mx-auto mb-7 max-w-2xl text-sm leading-relaxed text-white drop-shadow-[0_1px_4px_hsl(222_47%_8%_/_0.9)] md:text-base">
+            <p className="mx-auto mb-7 max-w-2xl text-sm leading-relaxed text-[#cbbfa9] drop-shadow-[0_1px_4px_hsl(222_47%_8%_/_0.9)] md:text-base">
               VAHNOVA Technologies is a digital engineering company that builds scalable software platforms, automation tools, and enterprise technology systems. It combines innovation and strong engineering practices to deliver reliable digital solutions that help organizations operate efficiently and create long-term value.
             </p>
 
             <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Link
                 to="/contact"
-                className="group flex items-center gap-1.5 rounded-lg bg-accent px-5 py-2.5 text-xs font-semibold text-white transition-all hover:shadow-[var(--shadow-lg)]"
+                className="group flex items-center gap-1.5 rounded-lg bg-accent px-5 py-2.5 text-xs font-semibold text-[#ded4c1] transition-all hover:shadow-[var(--shadow-lg)]"
               >
                 Start a Project
                 <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
                 to="/services"
-                className="group flex items-center gap-1.5 rounded-lg border border-white/45 bg-white/10 px-5 py-2.5 text-xs font-semibold text-white transition-all hover:bg-white/15"
+                className="group flex items-center gap-1.5 rounded-lg border border-[#f6d28b]/55 bg-[#f6d28b]/10 px-5 py-2.5 text-xs font-semibold text-[#d6c9aa] transition-all hover:bg-[#f6d28b]/18"
               >
                 Explore Solutions
                 <ChevronRight size={14} className="transition-transform group-hover:translate-x-1" />

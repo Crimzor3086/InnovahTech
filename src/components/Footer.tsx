@@ -32,9 +32,9 @@ const Footer = () => {
           <div className="col-span-2 lg:col-span-2">
             <div className="mb-1 flex items-center gap-1.5">
               <img src="/logo.png" alt="VAHNOVA logo" className="h-5 w-5 rounded object-cover sm:h-6 sm:w-6" />
-              <span className="font-heading text-sm font-bold text-white drop-shadow-[0_1px_4px_hsl(222_47%_8%_/_0.95)] sm:text-base">VAHNOVA</span>
+              <span className="font-heading text-sm font-bold text-[#d4c9b1] drop-shadow-[0_1px_4px_hsl(222_47%_8%_/_0.95)] sm:text-base">VAHNOVA</span>
             </div>
-            <p className="max-w-[16rem] text-xs leading-snug text-white drop-shadow-[0_1px_3px_hsl(222_47%_8%_/_0.9)] sm:text-sm">
+            <p className="max-w-[16rem] text-xs leading-snug text-[#cbbfa9] drop-shadow-[0_1px_3px_hsl(222_47%_8%_/_0.9)] sm:text-sm">
               Engineering intelligent digital systems for the modern enterprise.
               Scalable platforms, automation, and advanced infrastructure.
             </p>
@@ -42,18 +42,18 @@ const Footer = () => {
 
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h4 className="mb-1 font-heading text-xs font-bold uppercase tracking-wide text-white drop-shadow-[0_1px_3px_hsl(222_47%_8%_/_0.9)] sm:text-sm">
+              <h4 className="mb-1 font-heading text-xs font-bold uppercase tracking-wide text-[#f6d28b] drop-shadow-[0_1px_3px_hsl(222_47%_8%_/_0.9)] sm:text-sm">
                 {category}
               </h4>
               <ul className="space-y-1">
                 {links.map((link) => (
                   <li key={link.label}>
                     {link.href.startsWith("#") ? (
-                      <a href={link.href} className="text-xs text-white transition-colors hover:text-white/80 sm:text-sm">
+                      <a href={link.href} className="text-xs text-[#d4c9b1] transition-colors hover:text-[#f6d28b] sm:text-sm">
                         {link.label}
                       </a>
                     ) : (
-                      <Link to={link.href} className="text-xs text-white transition-colors hover:text-white/80 sm:text-sm">
+                      <Link to={link.href} className="text-xs text-[#d4c9b1] transition-colors hover:text-[#f6d28b] sm:text-sm">
                         {link.label}
                       </Link>
                     )}
@@ -65,7 +65,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-2 border-t border-border pt-1.5">
-          <p className="text-center text-[11px] text-white sm:text-xs">
+          <p className="text-center text-[11px] text-[#cbbfa9] sm:text-xs">
             © {new Date().getFullYear()} VAHNOVA Technologies. All rights reserved.
           </p>
         </div>
