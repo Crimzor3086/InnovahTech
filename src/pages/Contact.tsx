@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { useState } from "react";
 
 const Contact = () => {
@@ -29,13 +29,19 @@ const Contact = () => {
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
                     <Mail size={18} className="text-primary" />
                   </div>
-                  info@vahnova.com
+                  innovahtech2@gmail.com
                 </div>
                 <div className="flex items-center gap-3 text-sm">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
                     <Phone size={18} className="text-primary" />
                   </div>
-                  +254 700 000 000
+                  0702970187
+                </div>
+                <div className="flex items-center gap-3 text-sm">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <MessageCircle size={18} className="text-primary" />
+                  </div>
+                  WhatsApp (recommended)
                 </div>
                 <div className="flex items-center gap-3 text-sm">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -44,6 +50,17 @@ const Contact = () => {
                   Nairobi, Kenya
                 </div>
               </div>
+              <Button asChild variant="cta" className="w-full sm:w-auto" size="lg">
+                <a
+                  href="https://wa.me/254702970187"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Chat on WhatsApp"
+                >
+                  <MessageCircle />
+                  Chat on WhatsApp
+                </a>
+              </Button>
             </div>
 
             {/* Form */}
