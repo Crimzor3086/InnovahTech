@@ -1,73 +1,84 @@
 import { Link } from "react-router-dom";
-
-const footerLinks = {
-  Services: [
-    { label: "Web Development", href: "/services" },
-    { label: "Mobile Apps", href: "/services" },
-    { label: "Cybersecurity", href: "/services" },
-    { label: "Data & AI", href: "/services" },
-  ],
-  Company: [
-    { label: "About", href: "/about" },
-    { label: "Careers", href: "/insights" },
-    { label: "Insights", href: "/insights" },
-    { label: "Contact", href: "/contact" },
-  ],
-  Legal: [
-    { label: "Privacy Policy", href: "#" },
-    { label: "Terms of Service", href: "#" },
-    { label: "Cookie Policy", href: "#" },
-  ],
-};
+import { Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer
-      className="relative mt-auto overflow-hidden border-t border-border py-2 sm:py-3"
-      style={{ backgroundImage: "url('/footer.jpeg')", backgroundSize: "cover", backgroundPosition: "center" }}
-    >
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,hsl(222_47%_8%_/_0.88),hsl(222_47%_8%_/_0.92))]" />
-      <div className="container relative z-10 mx-auto px-4 sm:px-5">
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-5">
-          <div className="col-span-2 lg:col-span-2">
-            <div className="mb-1 flex items-center gap-1.5">
-              <img src="/logo.png" alt="VAHNOVA logo" className="h-5 w-5 rounded object-cover sm:h-6 sm:w-6" />
-              <span className="font-heading text-sm font-bold text-[#d4c9b1] drop-shadow-[0_1px_4px_hsl(222_47%_8%_/_0.95)] sm:text-base">VAHNOVA</span>
+    <footer className="bg-foreground text-background">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* Brand */}
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-9 h-9 rounded-lg gradient-primary flex items-center justify-center">
+                <span className="text-primary-foreground font-heading font-bold text-lg">V</span>
+              </div>
+              <span className="font-heading font-bold text-xl">Vahnova Tech</span>
             </div>
-            <p className="max-w-[16rem] text-xs leading-snug text-[#cbbfa9] drop-shadow-[0_1px_3px_hsl(222_47%_8%_/_0.9)] sm:text-sm">
-              Engineering intelligent digital systems for the modern enterprise.
-              Scalable platforms, automation, and advanced infrastructure.
+            <p className="text-background/70 text-sm leading-relaxed">
+              Building secure, scalable, and intelligent solutions for modern businesses.
             </p>
           </div>
 
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
-              <h4 className="mb-1 font-heading text-xs font-bold uppercase tracking-wide text-[#f6d28b] drop-shadow-[0_1px_3px_hsl(222_47%_8%_/_0.9)] sm:text-sm">
-                {category}
-              </h4>
-              <ul className="space-y-1">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    {link.href.startsWith("#") ? (
-                      <a href={link.href} className="text-xs text-[#d4c9b1] transition-colors hover:text-[#f6d28b] sm:text-sm">
-                        {link.label}
-                      </a>
-                    ) : (
-                      <Link to={link.href} className="text-xs text-[#d4c9b1] transition-colors hover:text-[#f6d28b] sm:text-sm">
-                        {link.label}
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-heading font-bold text-sm uppercase tracking-wider mb-4">Quick Links</h4>
+            <div className="flex flex-col gap-2">
+              {["Home", "About", "Services", "Portfolio", "Products", "Contact"].map((item) => (
+                <Link
+                  key={item}
+                  to={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+                  className="text-background/70 hover:text-secondary text-sm transition-colors"
+                >
+                  {item}
+                </Link>
+              ))}
             </div>
-          ))}
+          </div>
+
+          {/* Services */}
+          <div>
+            <h4 className="font-heading font-bold text-sm uppercase tracking-wider mb-4">Services</h4>
+            <div className="flex flex-col gap-2">
+              {["Web Development", "Mobile Apps", "Cybersecurity", "Data & AI"].map((s) => (
+                <span key={s} className="text-background/70 text-sm">{s}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="font-heading font-bold text-sm uppercase tracking-wider mb-4">Contact Us</h4>
+            <div className="flex flex-col gap-3 text-sm text-background/70">
+              <div className="flex items-center gap-2">
+                <Mail size={16} className="text-secondary" />
+                info@vahnova.com
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone size={16} className="text-secondary" />
+                +254 700 000 000
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin size={16} className="text-secondary" />
+                Nairobi, Kenya
+              </div>
+            </div>
+            {/* Social Icons */}
+            <div className="flex gap-3 mt-4">
+              {["Twitter", "LinkedIn", "GitHub", "Facebook"].map((s) => (
+                <a
+                  key={s}
+                  href="#"
+                  className="w-9 h-9 rounded-full bg-background/10 flex items-center justify-center text-background/70 hover:bg-secondary hover:text-secondary-foreground transition-colors text-xs font-bold"
+                >
+                  {s[0]}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="mt-2 border-t border-border pt-1.5">
-          <p className="text-center text-[11px] text-[#cbbfa9] sm:text-xs">
-            © {new Date().getFullYear()} VAHNOVA Technologies. All rights reserved.
-          </p>
+        <div className="border-t border-background/10 mt-12 pt-8 text-center text-sm text-background/50">
+          © {new Date().getFullYear()} Vahnova Technologies. All rights reserved.
         </div>
       </div>
     </footer>
