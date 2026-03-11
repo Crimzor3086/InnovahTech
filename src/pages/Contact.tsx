@@ -29,19 +29,28 @@ const Contact = () => {
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
                     <Mail size={18} className="text-primary" />
                   </div>
-                  innovahtech2@gmail.com
+                  <a href="mailto:innovahtech2@gmail.com" className="hover:underline">
+                    innovahtech2@gmail.com
+                  </a>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
                     <Phone size={18} className="text-primary" />
                   </div>
-                  0702970187
+                  <a href="tel:+254702970187" className="hover:underline">
+                    0702970187
+                  </a>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
                     <MessageCircle size={18} className="text-primary" />
                   </div>
-                  WhatsApp (recommended)
+                  <div className="flex items-center gap-2">
+                    <span>WhatsApp</span>
+                    <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-medium">
+                      Recommended
+                    </span>
+                  </div>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
