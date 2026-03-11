@@ -41,8 +41,8 @@ const Header = () => {
               loading="lazy"
             />
           </div>
-          <span className="font-heading font-bold text-xl text-foreground">
-            Vahnova<span className="text-primary"> Tech</span>
+          <span className="font-heading font-bold text-lg text-foreground">
+            VAHNOVA<span className="text-primary"> TECHNOLOGIES</span>
           </span>
         </Link>
 

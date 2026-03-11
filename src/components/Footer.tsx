@@ -20,7 +20,7 @@ const Footer = () => {
                   loading="lazy"
                 />
               </div>
-              <span className="font-heading font-bold text-xl">Vahnova Tech</span>
+              <span className="font-heading font-bold text-lg">VAHNOVA TECHNOLOGIES</span>
             </div>
             <p className="text-background/70 text-sm leading-relaxed">
               Building secure, scalable, and intelligent solutions for modern businesses.
