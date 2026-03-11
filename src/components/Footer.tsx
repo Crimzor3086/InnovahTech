@@ -3,14 +3,22 @@ import { Mail, Phone, MapPin } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-foreground text-background">
+    <footer
+      className="bg-foreground text-background"
+      style={{ backgroundImage: "url(/footer.jpeg)", backgroundSize: "cover", backgroundPosition: "center" }}
+    >
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-lg gradient-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-heading font-bold text-lg">V</span>
+              <div className="w-9 h-9 rounded-lg overflow-hidden bg-background/10 flex items-center justify-center">
+                <img
+                  src="/logo.png"
+                  alt="Vahnova Tech logo"
+                  className="w-9 h-9 object-cover"
+                  loading="lazy"
+                />
               </div>
               <span className="font-heading font-bold text-xl">Vahnova Tech</span>
             </div>

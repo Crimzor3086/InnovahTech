@@ -33,8 +33,13 @@ const Header = () => {
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg gradient-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-heading font-bold text-lg">V</span>
+          <div className="w-9 h-9 rounded-lg overflow-hidden bg-muted flex items-center justify-center">
+            <img
+              src="/logo.png"
+              alt="Vahnova Tech logo"
+              className="w-9 h-9 object-cover"
+              loading="lazy"
+            />
           </div>
           <span className="font-heading font-bold text-xl text-foreground">
             Vahnova<span className="text-primary"> Tech</span>
